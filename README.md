@@ -1,5 +1,4 @@
-# function-fpdf
-Generate PDF menggunakan library FPDF mengguanakan fungsi/method
+# Generate PDF menggunakan library FPDF mengguanakan fungsi/method
 
 FPDF (http://fpdf.org) merupakan salah satu library PHP yang
 memungkinkan untuk membuat / generate file PDF secara
