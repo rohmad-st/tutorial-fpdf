@@ -4,6 +4,7 @@ require('../lib/fpdf.php');
 class ImprovedTable extends FPDF
 {
     var $show_cols = false;
+    var $max_height;
 
     function addLineFormat($tab)
     {
@@ -22,7 +23,13 @@ class ImprovedTable extends FPDF
         $r1 = $this->GetX();
         $r2 = $this->w - ($r1 * 2);
         $y1 = $this->GetY();
-        $y2 = 40;//$this->h - 50 - $y1;
+        $y2 = $this->h - 50 - $y1;
+
+        $mh = $this->max_height;
+        if (isset($mh)) {
+            $y2 = $mh;
+        }
+
         $this->SetXY($r1, $y1);
         $this->Rect($r1, $y1, $r2, $y2, "D");
 

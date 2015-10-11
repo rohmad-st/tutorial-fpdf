@@ -10,6 +10,9 @@ $pdf = new ImprovedTable('P', 'mm', 'A4');
 $pdf->AddPage();
 $pdf->SetFont('Arial', 'B', 12);
 
+// tinggi maksimal
+$pdf->max_height = 40;
+
 // menggunakan column. default: false
 $pdf->show_cols = true;
 
