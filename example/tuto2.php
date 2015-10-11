@@ -1,7 +1,12 @@
 <?php
 require('../inc/WrapTable.php');
+require('../inc/GlobalFunction.php');
 
-$pdf = new WrapTable('P', 'mm', 'A4');
+// global funtion
+$func = new GlobalFunction();
+
+// Start FPDF
+$pdf = new WrapTable();
 $pdf->AddPage();
 $pdf->SetFont('Arial', 'B', 12);
 
@@ -18,7 +23,7 @@ $pdf->Row(['No.', 'Uraian', 'Jumlah', 'Ket']);
 $pdf->SetAligns(['C', 'L', 'R', 'L']);
 $pdf->SetFont('Arial', '', 12);
 for ($i = 1; $i < 10; $i ++) {
-    $pdf->Row([$i, $pdf->GenerateSentence(), $i * rand(1, 100), $pdf->GenerateWord()]);
+    $pdf->Row([$i, $func->GenerateSentence(), $i * rand(1, 100), $func->GenerateWord()]);
 }
 
 $pdf->Output();
