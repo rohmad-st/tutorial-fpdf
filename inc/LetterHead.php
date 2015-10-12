@@ -4,6 +4,8 @@ require('../lib/fpdf.php');
 class LetterHead extends FPDF
 {
     var $widths;
+    var $font_style;
+    var $font_size;
 
     /**
      * Definite width column
@@ -17,6 +19,28 @@ class LetterHead extends FPDF
     }
 
     /**
+     * Definite Style each text in row
+     *
+     * @param $s
+     */
+    function AddLetterHeadFontSize($s)
+    {
+        //Set the array of font size
+        $this->font_size = $s;
+    }
+
+    /**
+     * Definite Style each text in row
+     *
+     * @param $s
+     */
+    function AddLetterHeadFontStyle($s)
+    {
+        //Set the array of font syle
+        $this->font_style = $s;
+    }
+
+    /**
      * Add Letter Head (Kop Surat) exactly in top page
      *
      * @param array $data
@@ -24,13 +48,20 @@ class LetterHead extends FPDF
      */
     function AddLetterHead(array $data, $file = null)
     {
+        $f_family = isset($this->FontFamily) ? 'Arial' : $this->FontFamily; // font family
         $length = count($data); // length data
-        $column = ($this->FontSizePt / 2) - 1; // height of row
+
+        // get sum of font size
+        $fz = $this->font_size;
+        $tot_font_size = empty($fz) ? 10 * $length : 0;
+        for ($i = 0; $i < count($fz); $i ++) {
+            $tot_font_size += $fz[$i];
+        }
 
         $x = $this->lMargin; // set x position exactly on left margin
         $y = $this->tMargin; // set y position exactly on top margin
         $w = $this->widths; // width column
-        $h = ($length * $column) + 4; // height box
+        $h = ($tot_font_size / 2) - 1; // height box
 
         $this->Rect($x, $y, $w + 25, $h); // box in out of text
 
@@ -43,10 +74,16 @@ class LetterHead extends FPDF
 
         // text in letter head
         $this->SetY($y + 2);
+
         for ($i = 0; $i < $length; $i ++) {
+            $f_size = empty($this->font_size) ? '10' : $this->font_size[$i]; // font size
+            $f_style = empty($this->font_style) ? $this->FontStyle : $this->font_style[$i]; // font style
+            $h_cell = ($f_size / 2) - 1; // height cell
+
             $this->SetX($x + 25);
-            $this->Cell($w, $column, $data[$i], 0, 0, 'C');
-            $this->Ln($column);
+            $this->SetFont($f_family, $f_style, $f_size);
+            $this->Cell($w, $h_cell, $data[$i], 0, 0, 'C');
+            $this->Ln($h_cell);
         }
     }
 
