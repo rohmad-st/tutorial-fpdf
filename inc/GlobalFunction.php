@@ -2,6 +2,9 @@
 
 class GlobalFunction
 {
+    var $kertas = 'A4'; // jenis kertas
+    var $kertas_pjg = 297; // portrait
+    var $kertas_lbr = 210; // landscape
     /**
      * Generate kalimat
      *
