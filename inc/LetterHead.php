@@ -94,8 +94,8 @@ class LetterHead extends FPDF
 
         for ($i = 0; $i < $length; $i ++) {
             if ($i == 0) {
-
                 $this->Cell($this->widths[$i], 5, $data[$i], 'LB', 0, 'L');
+
             } elseif ($i == $length - 1) {
                 $this->Cell($this->widths[$i], 5, $data[$i], 'RB', 0, 'L');
 
