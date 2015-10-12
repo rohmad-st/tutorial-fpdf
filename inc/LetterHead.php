@@ -45,8 +45,10 @@ class LetterHead extends FPDF
      *
      * @param array $data
      * @param null  $file
+     * @param null  $keterangan
+     * @param int   $width_keterangan
      */
-    function AddLetterHead(array $data, $file = null)
+    function AddLetterHead(array $data, $file = null, $keterangan = null, $width_keterangan = 25)
     {
         $f_family = isset($this->FontFamily) ? 'Arial' : $this->FontFamily; // font family
         $length = count($data); // length data
@@ -84,6 +86,15 @@ class LetterHead extends FPDF
             $this->SetFont($f_family, $f_style, $f_size);
             $this->Cell($w, $h_cell, $data[$i], 0, 0, 'C');
             $this->Ln($h_cell);
+        }
+
+        // right info of letter
+        if ($keterangan != null) {
+            $x = ($x + $w) + 25;
+            $this->Rect($x, $y, $width_keterangan, $h);
+            $this->SetXY($x, ($h / 2) + 5.5);
+            $this->MultiCell($width_keterangan, 4, $keterangan, 0, 'C');
+            $this->Ln(($h / 2) - 5.5);
         }
     }
 
