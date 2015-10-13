@@ -8,6 +8,21 @@ class LetterSignature extends WrapTable
     var $default_font_size = 9;
     var $padding_column    = 5;
 
+    function AddSignature(array $data)
+    {
+        $dt = empty($data) ? 'tidak ada' : 'ada';
+
+        $this->Cell(70, 4, $dt, 0, 0, 'C');
+
+//        $x = ($this->w / 2) - ($this->lMargin * 2);
+//
+//        for ($i = 0; $i < count($data); $i ++) {
+//            $this->SetX(- $x);
+//            $this->Cell(70, 4, $data[$i], 0, 0, 'C');
+//            $this->Ln(20);
+//        }
+    }
+
     /**
      * Signature for bottom place
      *
@@ -18,12 +33,18 @@ class LetterSignature extends WrapTable
     function Signature($jenis = 1, $height_of_cell = 40, $orientation = 'P')
     {
         // Definite size of Paper
-        $size = new GlobalFunction();
+        // $size = new GlobalFunction();
+        $w = $this->w;
+        $h = $this->h;
+
+        // $x = $this->GetX();
+        $y = $this->GetY();
+
 
         switch ($jenis) {
             case 2: // landscape final
                 $bottom_margin = 40;
-                $space_bottom = $size->kertas_lbr - ($this->GetY() + $bottom_margin); // space left on page
+                $space_bottom = $w - ( + $bottom_margin); // space left on page
                 if ($height_of_cell > $space_bottom) {
                     $this->AddPage();
                     $this->Ttd2();
@@ -35,7 +56,7 @@ class LetterSignature extends WrapTable
 
             case 3: // portrait rancangan
                 $bottom_margin = 105;
-                $space_bottom = $size->kertas_pjg - ($this->GetY() + $bottom_margin); // space left on page
+                $space_bottom = $h - ($y + $bottom_margin); // space left on page
                 if ($height_of_cell > $space_bottom) {
                     $this->AddPage();
                     $this->Ttd3();
@@ -47,7 +68,7 @@ class LetterSignature extends WrapTable
 
             case 4: // landscape rancangan
                 $bottom_margin = 129;
-                $space_bottom = $size->kertas_lbr - ($this->GetY() + $bottom_margin); // space left on page
+                $space_bottom = $w - ($y + $bottom_margin); // space left on page
                 if ($height_of_cell > $space_bottom) {
                     $this->AddPage();
                     $this->Ttd4();
@@ -59,7 +80,7 @@ class LetterSignature extends WrapTable
 
             default: // portrait final
                 $bottom_margin = 10;
-                $space_bottom = $size->kertas_pjg - ($this->GetY() + $bottom_margin); // space left on page
+                $space_bottom = $h - ($y + $bottom_margin); // space left on page
                 if ($height_of_cell > $space_bottom) {
                     $this->AddPage();
                     $this->Ttd($orientation);
